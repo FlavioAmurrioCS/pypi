@@ -7,7 +7,7 @@ using `uv` and `dumb-pypi` tool.
 
 ## WARNING!
 This repo is a proof of concept and should not be used for production. I mainly
-made this for writing some PEP723 with some shared library without needing to
+made this for writing some PEP723 scripts with some shared library without needing to
 have it be published.
 [--extra-index-url is unsafe! (intermediate)](https://youtu.be/fWquXVcTKjU)
 
@@ -28,7 +28,7 @@ have it be published.
 
 ### Using environmental variables
 
-To configure most tool you can set the following environmental variables. Add these to your ~/{.bash|.zsh}rc to persist the change.
+To configure most tools you can set the following environmental variables. Add these to your ~/{.bash|.zsh}rc to persist the change.
 ```bash
 export PIP_EXTRA_INDEX_URL="https://flavioamurriocs.github.io/pypi/simple"
 export UV_INDEX="https://flavioamurriocs.github.io/pypi/simple"
@@ -45,7 +45,7 @@ pip install --extra-index-url=https://flavioamurriocs.github.io/pypi/simple uv-t
 ```
 
 ### Working with uv (Recommended)
-NOTE: uv tries to address the `dependency confusion` attack by making the dafault-index take priority. ([reference](https://docs.astral.sh/uv/reference/cli/#uv-add--index-strategy))
+NOTE: uv tries to address the `dependency confusion` attack by making the default-index take priority. ([reference](https://docs.astral.sh/uv/reference/cli/#uv-add--index-strategy))
 ```bash
 uv add --index=https://flavioamurriocs.github.io/pypi/simple uv-to-pipfile
 ```
@@ -102,3 +102,10 @@ uv-to-pipfile = { version= "*", index="private"}
 [requires]
 python_version = "3.12"
 ```
+
+## TODO:
+- Generate .metadata file.
+- Convert to python file for maintainability.
+- Add option to add a .whl directly rather than building all of them.
+- Add a check to see if package is already in main PyPI.
+- Cleanup packages that are old and that have published already.
