@@ -74,7 +74,7 @@ function main(){
         echo -n "'filename': '${file}', "
         echo -n "'hash': 'sha256=$(sha256 -q "${full_file_path}")', "
         echo -n "'requires_python': '${requires_python}',"
-        echo -n "'core_metadata': 'true', "
+        # echo -n "'core_metadata': 'true', " # Add support for .metadata
         echo -n "'uploaded_by': '${USER}'"
         # echo -n "'upload_timestamp': '${}',"
         # echo -n "'yanked_reason': '${}',"
