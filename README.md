@@ -44,7 +44,8 @@ export UV_DEFAULT_INDEX="https://pypi.org/simple"
 pip install --extra-index-url=https://flavioamurriocs.github.io/pypi/simple uv-to-pipfile
 ```
 
-### Working with uv
+### Working with uv (Recommended)
+NOTE: uv tries to address the `dependency confusion` attack by making the dafault-index take priority. ([reference](https://docs.astral.sh/uv/reference/cli/#uv-add--index-strategy))
 ```bash
 uv add --index=https://flavioamurriocs.github.io/pypi/simple uv-to-pipfile
 ```
