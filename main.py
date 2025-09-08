@@ -206,12 +206,13 @@ class CLI:
     def publish(self) -> None:
         """Commit and push changes to the remote repository."""
         git_cmd = ("git", "-C", self.workdir)
-        console.print(f"[yellow]Publishing changes to {self.repo_url}[/yellow]")
+        console.print(f"[bold cyan]📤 Publishing changes to {self.repo_url}[/bold cyan]")
         with suppress(FileNotFoundError):
             shutil.rmtree(os.path.join(self.wheels_dir, ".gitignore"))
         subprocess_run((*git_cmd, "add", self.workdir), check=True)
         subprocess_run((*git_cmd, "commit", "--amend", "--no-edit"), check=True)
         subprocess_run((*git_cmd, "push", "--force"), check=True)
+        console.print("[bold green]✅ Published successfully![/bold green]")
         self.clean()
 
     def serve(self, bind: str = "127.0.0.1", port: int = 8000) -> None:
@@ -225,8 +226,8 @@ class CLI:
             f"--directory={self.workdir}",
             f"{port}",
         )
-        console.print(f"[yellow]Starting HTTP server on port {port}...[/yellow]")
-        console.print(f"[blue]Visit: http://127.0.0.1:{port}[/blue]")
+        console.print(f"[bold cyan]🚀 Starting HTTP server on port {port}...[/bold cyan]")
+        console.print(f"[bold blue]🌐 Visit: http://127.0.0.1:{port}[/bold blue]")
         subprocess_run(cmd, check=False)
 
     def add_files(self, files: list[str]) -> None:
@@ -274,11 +275,11 @@ class CLI:
                 # "--no-per-release-json", # Disable per-release JSON API (/pypi/<package>/<version>/json). This may be useful for large repositories because this metadata can be a huge number of files for little benefit as almost no tools use it.
             )
             subprocess_run(cmd, check=True)
-        console.print("Build complete.")
+        console.print("[bold green]🏗️  Build complete![/bold green]")
 
     def clean(self) -> None:
         """Clean the working directory."""
-        console.print(f"[yellow]Cleaning workdir: {self.workdir}[/yellow]")
+        console.print(f"[bold yellow]🧹 Cleaning workdir: {self.workdir}[/bold yellow]")
         with suppress(FileNotFoundError):
             shutil.rmtree(self.workdir)
 
@@ -291,15 +292,20 @@ class CLI:
             .to_list()
         )
         self.init_workspace()
+
+        console.print(f"[bold cyan]📦 Building {len(repos_to_build)} repositories...[/bold cyan]")
+
         with Progress(
             SpinnerColumn(),
             TextColumn("[progress.description]{task.description}"),
             console=console,
         ) as progress:
-            task = progress.add_task("Building packages...", total=len(repos_to_build))
+            task = progress.add_task("Starting builds...", total=len(repos_to_build))
 
             for repo in repos_to_build:
-                progress.update(task, description=f"Building {repo}")
+                # Extract just the repo URL for cleaner display
+                repo_url = repo.split()[0].split("/")[-1].replace(".git", "")
+                progress.update(task, description=f"Building {repo_url}...")
 
                 with tempfile.TemporaryDirectory() as tmp_repo:
                     try:
@@ -320,14 +326,16 @@ class CLI:
                             check=True,
                         )
 
-                        progress.update(task, description=f"[green]✓ Built {repo}[/green]")
+                        progress.update(task, description=f"[bold green]✅ Built {repo_url}[/bold green]")
 
                     except subprocess.CalledProcessError:
-                        progress.update(task, description=f"[red]✗ Failed to build {repo}[/red]")
+                        progress.update(task, description=f"[bold red]❌ Failed {repo_url}[/bold red]")
 
                 progress.advance(task)
 
-            progress.update(task, description="Build complete!")
+            progress.update(task, description="[bold green]🎉 All builds complete![/bold green]")
+
+        console.print(f"[bold green]✅ Successfully processed {len(repos_to_build)} repositories![/bold green]")
 
     def get_app(self) -> typer.Typer:
         app = typer.Typer(help="Private PyPI index management tool.")
