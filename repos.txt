@@ -1,0 +1,14 @@
+# git@github.com:FlavioAmurrioCS/aws-http-auth.git               --branch=main
+# git@github.com:FlavioAmurrioCS/comma-cli.git                   --branch=cookiecutter
+# git@github.com:FlavioAmurrioCS/depsdev.git                     --branch=main
+# git@github.com:FlavioAmurrioCS/dev-toolbox.git                 --branch=main
+# git@github.com:FlavioAmurrioCS/direct-deps.git                 --branch=main
+# git@github.com:FlavioAmurrioCS/lambda-dev-server.git           --branch=main
+# git@github.com:FlavioAmurrioCS/log-tool.git                    --branch=main
+# git@github.com:FlavioAmurrioCS/persistent-cache-decorator.git  --branch=main
+# git@github.com:FlavioAmurrioCS/record-replay-compare.git       --branch=main
+# git@github.com:FlavioAmurrioCS/ripgrep.git                     --branch=master
+# git@github.com:FlavioAmurrioCS/runtool.git                     --branch=main
+# git@github.com:FlavioAmurrioCS/typedfzf.git                    --branch=main
+git@github.com:FlavioAmurrioCS/uv-to-pipfile.git               --branch=2025.08.02
+# git@github.com:FlavioAmurrioCS/workflows.git                   --branch=main
